@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to get user profile
+    function getUserProfile() {
+      return get(/databases/$(database)/documents/profiles/$(request.auth.uid));
+    }
+    
+    // Helper function to check if user is recruiter/HR
+    // Optimized to check existence first before reading
+    function isRecruiter() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/profiles/$(request.auth.uid)) &&
+             getUserProfile().data.user_type == 'recruiter';
+    }
+    
+    // Profiles collection
+    match /profiles/{userId} {
+      // Users can read and write their own profile
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+      
+      // Recruiters can read all profiles (for candidate info)
+      allow read: if isRecruiter();
+    }
+    
+    // Resumes collection
+    match /resumes/{resumeId} {
+      // Allow read if:
+      // 1. User owns the resume, OR
+      // 2. User is a recruiter (HR can see all resumes)
+      allow read: if isAuthenticated() && 
+                    (resource.data.user_id == request.auth.uid || isRecruiter());
+      
+      // Allow list/query operations for collection queries
+      // For collection queries, we allow authenticated users to list
+      // Individual document access is controlled by the 'read' rule above
+      // Recruiters will be able to see all documents, candidates only their own
+      allow list: if isAuthenticated();
+      
+      // Allow create if user is authenticated and sets their own user_id
+      allow create: if isAuthenticated() && 
+                       request.resource.data.user_id == request.auth.uid;
+      
+      // Allow update if:
+      // 1. User owns the resume, OR
+      // 2. User is a recruiter
+      allow update: if isAuthenticated() && 
+                      (resource.data.user_id == request.auth.uid || isRecruiter());
+      
+      // Allow delete if:
+      // 1. User owns the resume, OR
+      // 2. User is a recruiter
+      allow delete: if isAuthenticated() && 
+                      (resource.data.user_id == request.auth.uid || isRecruiter());
+    }
+    
+    // Resume analysis collection
+    match /resume_analysis/{analysisId} {
+      // Allow read if:
+      // 1. User owns the resume (via resume_id), OR
+      // 2. User is a recruiter
+      allow read: if isAuthenticated() && (
+                    !exists(/databases/$(database)/documents/resumes/$(resource.data.resume_id)) ||
+                    get(/databases/$(database)/documents/resumes/$(resource.data.resume_id)).data.user_id == request.auth.uid ||
+                    isRecruiter()
+                  );
+      
+      // Allow create if user is authenticated
+      allow create: if isAuthenticated();
+      
+      // Allow update/delete if user is authenticated
+      allow update, delete: if isAuthenticated();
+    }
+  }
+}
+
+

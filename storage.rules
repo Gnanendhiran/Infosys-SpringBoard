@@ -1,0 +1,18 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Resumes storage
+    match /resumes/{userId}/{allPaths=**} {
+      // Allow read/write if:
+      // 1. User owns the file (matches their userId), OR
+      // 2. User is a recruiter (HR can access all resumes)
+      allow read, write: if request.auth != null && (
+                          request.auth.uid == userId ||
+                          // Check if user is recruiter (requires Firestore read)
+                          firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.user_type == 'recruiter'
+                        );
+    }
+  }
+}
+
+
