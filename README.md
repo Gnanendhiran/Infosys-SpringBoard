@@ -126,6 +126,8 @@ Recommendations (courses, projects)  +  Dashboards (Candidate / HR)
 **Backend / Infrastructure**
 - TypeScript (Node)
 - Firebase (Authentication, Firestore database)
+- NoSQL for resumes (flexible, unstructured).
+-SQL/MySQL for structured candidate/job data.
 - Supabase (file storage for resumes)
 
 **Deployment**
