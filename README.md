@@ -24,11 +24,12 @@ The core of the system is built around **Natural Language Processing (NLP)** and
 
 | Name | Role |
 |---|---|
+| Gnanendhiran V | Team Member |
 | Kuruba Hemanth Kishore | Team Member |
 | Krishna Shree Gunna | Team Member |
 | Devarasetty Sri Ranga Likhitha Naidu | Team Member |
 | Lokeshwari Cheeraboyina | Team Member |
-| Gnanendhiran V | Team Member |
+
 
 **Mentor:** Sangeetha Mahalingam
 **Program:** Infosys Springboard Virtual Internship 6.0 (8 Weeks)
@@ -117,14 +118,16 @@ Recommendations (courses, projects)  +  Dashboards (Candidate / HR)
 - Tailwind CSS
 - Recharts (data visualization)
 
-**Backend / Infrastructure**
-- TypeScript (Node)
-- Firebase (Authentication, Firestore database)
-- Supabase (file storage for resumes)
+
 
 **AI / NLP**
 - Transformer-based sentence embeddings (`Xenova/all-MiniLM-L6-v2`)
 - Cosine similarity for semantic skill matching
+
+**Backend / Infrastructure**
+- TypeScript (Node)
+- Firebase (Authentication, Firestore database)
+- Supabase (file storage for resumes)
 
 **Deployment**
 - Vercel (hosting)
@@ -185,4 +188,4 @@ We thank **Infosys Springboard** for the opportunity to build this project, and 
 
 ## 📄 License
 
-_Add your preferred license here (e.g., MIT) once decided._
+
