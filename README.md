@@ -113,17 +113,16 @@ Recommendations (courses, projects)  +  Dashboards (Candidate / HR)
 ## 🛠️ Tech Stack
 
 **Frontend**
+- html
 - TypeScript
 - React
-- Tailwind CSS
+- Tailwind,Bootstrap CSS
 - Recharts (data visualization)
-
-
 
 **AI / NLP**
 - Transformer-based sentence embeddings (`Xenova/all-MiniLM-L6-v2`)
 - Cosine similarity for semantic skill matching
-
+  
 **Backend / Infrastructure**
 - TypeScript (Node)
 - Firebase (Authentication, Firestore database)
@@ -132,9 +131,7 @@ Recommendations (courses, projects)  +  Dashboards (Candidate / HR)
 **Deployment**
 - Vercel (hosting)
 - GitHub (version control)
-
 ---
-
 ## ⚠️ Challenges Faced
 
 - **Unstructured resume content** — tables, bullet points, and images made clean text extraction difficult.
